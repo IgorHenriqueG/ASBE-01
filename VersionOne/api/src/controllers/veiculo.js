@@ -1,4 +1,4 @@
-const con = require('../connection/connect').con;
+const con = require('../connection/connect');
 
 const create = (req, res) => {
     const { placa, marca, modelo, tipo, diaria } = req.body;

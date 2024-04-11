@@ -1,4 +1,4 @@
-const con = require('../connection/connect').con;
+const con = require('../connection/connect');
 
 const create = (req, res) => {
     const { nome_cliente, cpf, telefone } = req.body;
@@ -16,8 +16,7 @@ const create = (req, res) => {
     });
 
     if(telefone != null) {
-        const sql2 = `INSERT INTO Telefone (cpf, numero) VALUES (?, ?)`;
-        con.query(sql2, [cpf, telefone]);
+        con.query('INSERT INTO Telefone (cpf, numero) VALUES (?, ?)', [cpf, telefone]);
     }
 }
 
@@ -33,9 +32,10 @@ const read = (req, res) => {
 };
 
 const update = (req, res) => {
-    const { nome_cliente, cpf, telefone } = req.body;
-    const sql = `UPDATE Cliente SET nome_cliente = ?, cpf = ? WHERE cpf = ?`;
-    con.query(sql, [nome_cliente, cpf, cpf], (err, result) => {
+    const { cpf } = req.params;
+    const { nome_cliente, telefone } = req.body;
+    const sql = `UPDATE Cliente SET nome_cliente = ? WHERE cpf = ?`;
+    con.query(sql, [nome_cliente, cpf], (err, result) => {
         if(err) {
             res.status(500).json(err);
         } else {
@@ -44,8 +44,8 @@ const update = (req, res) => {
     });
 
     if(telefone != null) {
-        const sql2 = `UPDATE Telefone SET telefone = ? WHERE id = ?`;
-        con.query(sql2, [telefone, id]);
+        const sql2 = `UPDATE Telefone SET numero = ? WHERE cpf = ?`;
+        con.query(sql2, [telefone, cpf]);
     }
 };
 

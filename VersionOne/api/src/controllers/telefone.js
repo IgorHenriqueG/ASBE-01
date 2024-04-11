@@ -1,4 +1,4 @@
-const con = require('../connection/connect').con;
+const con = require('../connection/connect');
 
 const read = (req, res) => {
     con.query('SELECT * FROM Telefone', (err, result) => {
